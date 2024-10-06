@@ -1,0 +1,97 @@
+Asking: What are the names and email addresses of all customers?
+Generated SQL Query: SELECT Name, Email FROM Customers;
+
+Here are some names along with their email addresses:
+
+- Alice: alice@example.com
+- Bob: bob@example.com
+- Charlie: charlie@example.com
+- David: david@example.com
+- Eva: eva@example.com
+- Frank: frank@example.com
+- Grace: grace@example.com
+- Hannah: hannah@example.com
+- Ian: ian@example.com
+- Jack: jack@example.com
+- Kathy: kathy@example.com
+- Leo: leo@example.com
+- Mia: mia@example.com
+- Nina: nina@example.com
+- Oscar: oscar@example.com
+- Paul: paul@example.com
+- Quinn: quinn@example.com
+
+If you need more information or help, let me know!
+
+Asking: Can you provide the order details for a specific customer by their CustomerID?
+Generated SQL Query: SELECT 
+    Orders.OrderID,
+    Orders.Date,
+    Orders.TotalPrice,
+    MenuItems.MenuItemID,
+    MenuItems.Price,
+    OrderItems.Quantity
+FROM 
+    Customers
+JOIN 
+    Orders ON Customers.CustomerID = Orders.CustomerID
+JOIN 
+    OrderItems ON Orders.OrderID = OrderItems.OrderID
+JOIN 
+    MenuItems ON OrderItems.MenuItemID = MenuItems.MenuItemID
+WHERE 
+    Customers.CustomerID = ?;
+
+SQL error: Incorrect number of bindings supplied. The current statement uses 1, and there are 0 supplied.
+
+Asking: How many customers have placed orders in the last month?
+Generated SQL Query: SELECT COUNT(DISTINCT Customers.CustomerID) AS NumberOfCustomers
+FROM Customers
+JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE Date >= date('now', '-1 month');
+
+The result is 16.
+
+Asking: What is the total revenue generated from all orders placed this year?
+Generated SQL Query: SELECT SUM(TotalPrice) AS TotalRevenue
+FROM Orders
+WHERE strftime('%Y', Date) = strftime('%Y', 'now');
+
+The result is 357.34.
+
+Asking: Which menu items have a price higher than $20?
+Generated SQL Query: SELECT MenuItemID, Price
+FROM MenuItems
+WHERE Price > 20;
+
+It seems like there are two pieces of information here. The first number, 5, might represent a quantity or count, while the second number, 24.99, could be a price or value associated with that quantity. For example, if these were related to a product, it could mean you have 5 items, each priced at $24.99. Let me know if you need more details!
+
+Asking: Who is the customer with the highest total order value, and what is that value?
+Generated SQL Query: SELECT 
+    Customers.Name, 
+    Customers.Email, 
+    SUM(Orders.TotalPrice) AS TotalOrderValue
+FROM 
+    Customers
+JOIN 
+    Orders ON Customers.CustomerID = Orders.CustomerID
+GROUP BY 
+    Customers.CustomerID
+ORDER BY 
+    TotalOrderValue DESC
+LIMIT 1;
+
+Hi! It looks like Eva has made a transaction, and the associated email is eva@example.com. The amount involved is $42.99. If you need more details or have questions about this transaction, feel free to ask!
+
+Asking: What is the average total price of orders placed in the last 2 months?
+Generated SQL Query: SELECT AVG(TotalPrice) AS AverageTotalPrice
+FROM Orders
+WHERE Date >= date('now', '-2 months');
+
+The value is 22.33.
+
+Asking: What is the average price of menu items?
+Generated SQL Query: SELECT AVG(Price) AS AveragePrice
+FROM MenuItems;
+
+The result is approximately 9.77.
